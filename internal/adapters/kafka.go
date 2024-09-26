@@ -3,6 +3,7 @@ package adapters
 import (
 	"context"
 	"github.com/AydinKZ/K-Diode-Caster/internal/domain"
+	"github.com/segmentio/kafka-go"
 )
 
 type KafkaReader struct {
