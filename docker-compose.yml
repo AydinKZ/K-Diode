@@ -57,7 +57,7 @@ services:
 
   caster:
     build:
-      context: https://github.com/isatay012or02/kafka-diode-caster.git
+      context: https://github.com/AydinKZ/K-Diode-Caster.git
       dockerfile: Dockerfile
     environment:
       UDP_ADDRESS: "188.188.0.1:9999"
