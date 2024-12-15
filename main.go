@@ -42,10 +42,6 @@ func main() {
 		}
 
 		workersCount := os.Getenv("WORKERS_COUNT")
-		if workersCount == "" {
-			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), "WORKERS_COUNT environment variable not set"))
-			panic(err)
-		}
 		workers, err := strconv.Atoi(workersCount)
 		if err != nil {
 			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), err.Error()))
@@ -53,10 +49,6 @@ func main() {
 		}
 
 		messagesCount := os.Getenv("MESSAGES_COUNT")
-		if messagesCount == "" {
-			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), "MESSAGES_COUNT environment variable not set"))
-			panic(err)
-		}
 		messages, err := strconv.Atoi(messagesCount)
 		if err != nil {
 			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), err.Error()))
