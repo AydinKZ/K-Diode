@@ -9,5 +9,5 @@ type MessageHashCalculator interface {
 
 // MessageDuplicator - интерфейс для реализации дублирования сообщений
 type MessageDuplicator interface {
-	Duplicate(message domain.Message, copies int) []domain.Message
+	Duplicate(message *domain.Message, copies int) []*domain.Message
 }

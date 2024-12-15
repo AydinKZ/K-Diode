@@ -24,8 +24,8 @@ func NewMessageDuplicator() *MessageDuplicator {
 }
 
 // Duplicate создает несколько копий одного сообщения для обеспечения избыточности
-func (d *MessageDuplicator) Duplicate(message domain.Message, copies int) []domain.Message {
-	duplicatedMessages := make([]domain.Message, copies)
+func (d *MessageDuplicator) Duplicate(message *domain.Message, copies int) []*domain.Message {
+	duplicatedMessages := make([]*domain.Message, copies)
 	for i := 0; i < copies; i++ {
 		duplicatedMessages[i] = message
 	}

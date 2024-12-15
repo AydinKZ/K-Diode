@@ -41,6 +41,28 @@ func main() {
 			panic(err)
 		}
 
+		workersCount := os.Getenv("WORKERS_COUNT")
+		if workersCount == "" {
+			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), "WORKERS_COUNT environment variable not set"))
+			panic(err)
+		}
+		workers, err := strconv.Atoi(workersCount)
+		if err != nil {
+			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), err.Error()))
+			panic(err)
+		}
+
+		messagesCount := os.Getenv("MESSAGES_COUNT")
+		if messagesCount == "" {
+			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), "MESSAGES_COUNT environment variable not set"))
+			panic(err)
+		}
+		messages, err := strconv.Atoi(messagesCount)
+		if err != nil {
+			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), err.Error()))
+			panic(err)
+		}
+
 		topicsEnv := os.Getenv("TOPICS")
 		if topicsEnv == "" {
 			logger.Log(fmt.Sprintf("[%v][Error] %v", time.Now(), "TOPICS environment variable not set"))
@@ -65,7 +87,7 @@ func main() {
 			enableHash = true
 		}
 
-		kafkaReader := adapters.NewKafkaReader(cfg.Queue.Brokers, topics, cfg.Queue.GroupID)
+		kafkaReader := adapters.NewKafkaReader(cfg.Queue.Brokers, topics, cfg.Queue.GroupID, 500)
 		defer kafkaReader.Close()
 
 		udpSender, err := adapters.NewUDPSender(udpAddr)
@@ -79,7 +101,7 @@ func main() {
 
 		casterService := application.NewCasterService(kafkaReader, udpSender, hashCalculator, duplicator, copiesCount, enableHash, logger)
 
-		err = casterService.ProcessAndSendMessages()
+		err = casterService.ProcessAndSendMessages(workers, messages)
 		logger.SendMetricsToKafka()
 		if err != nil {
 			panic(err)

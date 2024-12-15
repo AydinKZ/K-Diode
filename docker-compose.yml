@@ -65,6 +65,8 @@ services:
       ENABLE_HASH: "true"
       DUPLICATES_COUNT: 1
       KAFKA_LOGGER_TOPIC: "LogsAndMetrics"
+      WORKERS_COUNT: 10
+      MESSAGES_COUNT: 1000
     networks:
       - kafka_net
     restart: always

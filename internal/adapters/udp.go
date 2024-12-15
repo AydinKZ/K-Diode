@@ -22,7 +22,7 @@ func NewUDPSender(address string) (*UDPSender, error) {
 	return &UDPSender{conn: conn}, nil
 }
 
-func (s *UDPSender) Send(message domain.Message) error {
+func (s *UDPSender) Send(message *domain.Message) error {
 	jsonMsg, err := json.Marshal(message)
 	if err != nil {
 		return err
